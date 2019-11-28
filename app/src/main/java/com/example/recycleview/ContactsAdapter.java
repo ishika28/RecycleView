@@ -1,6 +1,7 @@
 package com.example.recycleview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,10 +41,24 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
 
     @Override
     public void onBindViewHolder(@NonNull ContactsViewHolder holder, int position) {
-        Contacts contacts = contactsList.get(position);
+        final Contacts contacts = contactsList.get(position);
         holder.imgView.setImageResource(contacts.getImageId());
         holder.tvname.setText(contacts.getName());
         holder.tvphone.setText(contacts.getContactNo());
+
+        //adding click listener in an imageView
+
+        holder.imgView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent (mcontext, DetailsActivity.class);
+                intent.putExtra("image", contacts.getImageId());
+                intent.putExtra("name",contacts.getName());
+                intent.putExtra("phone", contacts.getContactNo());
+                mcontext.startActivity(intent);
+
+            }
+        });
 
     }
 
